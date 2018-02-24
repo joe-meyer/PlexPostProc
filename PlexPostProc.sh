@@ -55,22 +55,27 @@ if [ ! -z "$1" ]; then
    TEMPFILENAME="$(mktemp)"  # Temporary File for transcoding
 
    # Uncomment if you want to adjust the bandwidth for this thread
-   #MYPID=$$	# Process ID for current script
+   MYPID=$$	# Process ID for current script
    # Adjust niceness of CPU priority for the current process
-   #renice 19 $MYPID
-
+   renice 19 $MYPID
+   
+   # Absolute path to this script, e.g. /home/user/bin/foo.sh
+   SCRIPT=$(readlink -f "$0")
+   # Absolute path this script is in, thus /home/user/bin
+   SCRIPTPATH=$(dirname "$SCRIPT")
+   
    echo "********************************************************"
-   echo "Transcoding, Converting to H.264 w/Handbrake"
+   echo "Transcoding, Converting to H.265 w/Handbrake"
    echo "********************************************************"
-   HandBrakeCLI -i "$FILENAME" --preset-import-file "H.265-720.json"  -o "$TEMPFILENAME" || fatal "Handbreak has failed (Is it installed?)"
+   HandBrakeCLI -i "$FILENAME" --preset-import-file "${SCRIPTPATH}/H.265-720.json"  -o "$TEMPFILENAME" || fatal "Handbreak has failed (Is it installed?)"
 
    echo "********************************************************"
    echo "Cleanup / Copy $TEMPFILENAME to $FILENAME"
    echo "********************************************************"
 
    rm -f "$FILENAME"
-   mv -f "$TEMPFILENAME" "${FILENAME%.ts}.mkv"
-   chmod 777 "$FILENAME" # This step may no tbe neccessary, but hey why not.
+   mv -f "$TEMPFILENAME" "${FILENAME}.mkv"
+   #chmod 777 "$FILENAME" # This step may no tbe neccessary, but hey why not.
 
    echo "Done.  Congrats!"
 else
