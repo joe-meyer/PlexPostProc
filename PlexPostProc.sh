@@ -67,7 +67,7 @@ if [ ! -z "$1" ]; then
    echo "********************************************************"
    echo "Transcoding, Converting to H.265 w/Handbrake"
    echo "********************************************************"
-   HandBrakeCLI -i "$FILENAME" --preset-import-file "${SCRIPTPATH}/H.265-720.json" -Z "H.265-720.json" -o "$TEMPFILENAME" || fatal "Handbreak has failed (Is it installed?)"
+   HandBrakeCLI -i "$FILENAME" --preset-import-file "${SCRIPTPATH}/H.265-720.json" -Z "H.265-720" -o "$TEMPFILENAME" || fatal "Handbreak has failed (Is it installed?)"
 
    echo "********************************************************"
    echo "Cleanup / Copy $TEMPFILENAME to $FILENAME"
