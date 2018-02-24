@@ -62,7 +62,7 @@ if [ ! -z "$1" ]; then
    echo "********************************************************"
    echo "Transcoding, Converting to H.264 w/Handbrake"
    echo "********************************************************"
-   HandBrakeCLI -i "$FILENAME" -f mkv --aencoder copy -e qsv_h264 --x264-preset veryfast --x264-profile auto -q 16 --maxHeight 720 --decomb bob -o "$TEMPFILENAME" || fatal "Handbreak has failed (Is it installed?)"
+   HandBrakeCLI -i "$FILENAME" --preset-import-file "H.265-720.json"  -o "$TEMPFILENAME" || fatal "Handbreak has failed (Is it installed?)"
 
    echo "********************************************************"
    echo "Cleanup / Copy $TEMPFILENAME to $FILENAME"
